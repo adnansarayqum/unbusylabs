@@ -3,11 +3,18 @@ import { ArrowRight } from "lucide-react";
 import { caseStudies } from "@/content/work";
 import { Button } from "@/components/ui/Button";
 
-const accentClasses: Record<string, string> = {
-  cobalt: "from-cobalt/15 to-cobalt/5",
-  lime: "from-lime/25 to-lime/5",
-  coral: "from-coral/20 to-coral/5",
-  ink: "from-ink/15 to-ink/5",
+const stripClasses: Record<string, string> = {
+  cobalt: "bg-cobalt/10",
+  lime: "bg-lime/25",
+  coral: "bg-coral/15",
+  ink: "bg-ink/[0.06]",
+};
+
+const barClasses: Record<string, string> = {
+  cobalt: "bg-cobalt/40",
+  lime: "bg-emerald-500/50",
+  coral: "bg-coral/50",
+  ink: "bg-ink/30",
 };
 
 export function SelectedWork() {
@@ -37,23 +44,51 @@ export function SelectedWork() {
             <Link
               key={project.slug}
               href={`/work/${project.slug}`}
-              className={`group flex flex-col justify-between rounded-xl2 border border-border bg-gradient-to-br p-6 transition hover:-translate-y-1 hover:shadow-lg ${accentClasses[project.accent]}`}
+              className="group overflow-hidden rounded-xl2 border border-border bg-white transition hover:-translate-y-1 hover:shadow-lg"
             >
-              <div>
-                <p className="text-[11px] font-semibold tracking-widest text-ink/60">
+              <div className={`relative p-6 ${stripClasses[project.accent]}`}>
+                <p className="max-w-[220px] font-display text-lg font-bold leading-snug text-ink">
+                  {project.tagline}
+                </p>
+                <MiniMockup accent={project.accent} />
+              </div>
+
+              <div className="p-6">
+                <p className="text-[11px] font-semibold tracking-widest text-ink/50">
                   {project.category}
                 </p>
-                <h3 className="mt-3 font-display text-xl font-bold text-ink">{project.name}</h3>
+                <h3 className="mt-2 font-display text-xl font-bold text-ink">{project.name}</h3>
                 <p className="mt-2 text-sm text-slate">{project.summary}</p>
+                <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-cobalt">
+                  View project
+                  <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden />
+                </span>
               </div>
-              <span className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-ink">
-                {project.tagline}
-                <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden />
-              </span>
             </Link>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+function MiniMockup({ accent }: { accent: string }) {
+  const bar = barClasses[accent];
+  return (
+    <div
+      aria-hidden
+      className="absolute bottom-4 right-4 hidden w-24 rounded-lg border border-white/60 bg-white/80 p-2 shadow-sm sm:block"
+    >
+      <div className="flex gap-1">
+        <span className="h-1.5 w-1.5 rounded-full bg-coral/70" />
+        <span className="h-1.5 w-1.5 rounded-full bg-lime/70" />
+        <span className="h-1.5 w-1.5 rounded-full bg-cobalt/70" />
+      </div>
+      <div className="mt-2 space-y-1">
+        <span className={`block h-1.5 w-full rounded-full ${bar}`} />
+        <span className={`block h-1.5 w-2/3 rounded-full ${bar}`} />
+        <span className={`block h-1.5 w-4/5 rounded-full ${bar}`} />
+      </div>
+    </div>
   );
 }

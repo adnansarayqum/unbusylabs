@@ -17,22 +17,24 @@ import {
   BarChart3,
 } from "lucide-react";
 
-const inputs = [
-  { icon: FileSpreadsheet, label: "Spreadsheet" },
-  { icon: Mail, label: "Inbox" },
-  { icon: ListChecks, label: "Task list" },
-  { icon: StickyNote, label: "Sticky note" },
-  { icon: FileText, label: "Scattered document" },
-  { icon: MessageSquare, label: "Chat message" },
+type IconType = React.ComponentType<{ size?: number; className?: string }>;
+
+const inputs: { icon: IconType; label: string; rotate: string; bg: string; fg: string }[] = [
+  { icon: FileText, label: "Scattered document", rotate: "-rotate-6", bg: "bg-white", fg: "text-ink/50" },
+  { icon: ListChecks, label: "Task list", rotate: "rotate-3", bg: "bg-white", fg: "text-ink/70" },
+  { icon: FileSpreadsheet, label: "Spreadsheet", rotate: "-rotate-2", bg: "bg-emerald-500", fg: "text-white" },
+  { icon: StickyNote, label: "Later? Maybe?", rotate: "rotate-6", bg: "bg-amber-300", fg: "text-ink/70" },
+  { icon: Mail, label: "Inbox", rotate: "-rotate-3", bg: "bg-cobalt", fg: "text-white" },
+  { icon: MessageSquare, label: "Chat message", rotate: "rotate-2", bg: "bg-teal-400", fg: "text-white" },
 ];
 
-const outputs = [
-  { icon: Globe, label: "Websites", color: "bg-cobalt" },
-  { icon: Code2, label: "Software", color: "bg-ink" },
-  { icon: Workflow, label: "Automation", color: "bg-emerald-600" },
-  { icon: Sparkles, label: "AI agents", color: "bg-violet-600" },
-  { icon: PlaySquare, label: "Content", color: "bg-coral" },
-  { icon: BarChart3, label: "Data", color: "bg-amber-500" },
+const outputs: { icon: IconType; label: string; bg: string; fg: string }[] = [
+  { icon: Globe, label: "Websites", bg: "bg-cobalt", fg: "text-white" },
+  { icon: Code2, label: "Software", bg: "bg-emerald-600", fg: "text-white" },
+  { icon: Workflow, label: "Automation", bg: "bg-coral", fg: "text-white" },
+  { icon: Sparkles, label: "AI agents", bg: "bg-violet-500", fg: "text-white" },
+  { icon: PlaySquare, label: "Content", bg: "bg-red-500", fg: "text-white" },
+  { icon: BarChart3, label: "Data", bg: "bg-sky-500", fg: "text-white" },
 ];
 
 const machineLabels = ["CLEAN", "CONNECT", "AUTOMATE", "AMPLIFY"];
@@ -60,11 +62,14 @@ export function WorkflowMachine() {
     <div ref={sectionRef} aria-hidden="true">
       {/* Desktop / tablet horizontal machine */}
       <div className="hidden lg:block">
-        <div className="relative flex items-center gap-6 rounded-xl2 border border-border bg-white/60 p-8">
-          <ConveyorLane items={inputs} active={isActive} direction="in" />
+        <div className="relative flex items-center gap-4">
+          <ConveyorLane items={inputs} active={isActive} />
           <Machine active={isActive} />
-          <ConveyorLane items={outputs} active={isActive} direction="out" />
+          <ConveyorLane items={outputs} active={isActive} />
         </div>
+        <p className="mt-2 text-center font-hand text-sm tracking-wide text-slate/70">
+          Less busy. More possible.
+        </p>
       </div>
 
       {/* Mobile / tablet-portrait vertical sequence */}
@@ -82,33 +87,39 @@ export function WorkflowMachine() {
 function ConveyorLane({
   items,
   active,
-  direction,
 }: {
-  items: { icon: React.ComponentType<{ size?: number; className?: string }>; label: string }[];
+  items: { icon: IconType; label: string; rotate?: string; bg: string; fg: string }[];
   active: boolean;
-  direction: "in" | "out";
 }) {
   return (
     <div className="flex-1">
-      <div className="relative overflow-hidden rounded-xl border border-border bg-ivory p-4">
-        <div
-          className={clsx(
-            "flex gap-3",
-            active && "animate-conveyor",
-            direction === "out" && "flex-row-reverse"
-          )}
-        >
+      <div className="relative overflow-hidden rounded-2xl bg-[#12141a] p-4 pb-3 shadow-inner">
+        <div className={clsx("flex items-end gap-2.5", active && "animate-conveyor")}>
           {items.map((item) => (
             <div
               key={item.label}
-              className="flex h-16 w-16 shrink-0 flex-col items-center justify-center gap-1 rounded-lg border border-border bg-white shadow-sm"
+              className={clsx(
+                "flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-lg shadow-md transition-transform",
+                item.bg,
+                item.rotate
+              )}
             >
-              <item.icon size={20} className="text-ink/70" />
+              <item.icon size={20} className={item.fg} />
             </div>
           ))}
         </div>
-        <div className="mt-3 h-2 rounded-full bg-border" />
+        <Rollers />
       </div>
+    </div>
+  );
+}
+
+function Rollers() {
+  return (
+    <div className="mt-2 flex justify-between px-1">
+      {Array.from({ length: 8 }).map((_, index) => (
+        <span key={index} className="h-2.5 w-2.5 rounded-full bg-white/15" />
+      ))}
     </div>
   );
 }
@@ -117,53 +128,71 @@ function Machine({ active, compact = false }: { active: boolean; compact?: boole
   return (
     <div
       className={clsx(
-        "relative shrink-0 rounded-xl2 border border-border bg-ink px-6 py-6 text-white",
-        compact ? "w-full max-w-xs" : "w-72"
+        "relative shrink-0 rounded-[28px] border border-border bg-[#F5F3EC] px-5 py-6 shadow-lg",
+        compact ? "w-full max-w-xs" : "w-80"
       )}
     >
+      {/* Knob on top edge */}
+      <span
+        aria-hidden
+        className="absolute -top-2 left-1/2 h-4 w-8 -translate-x-1/2 rounded-full bg-amber-400 shadow-sm"
+      />
+
       <div className="flex items-center justify-between">
-        <span className="font-display text-sm font-bold">unbusylabs</span>
-        <span
-          className={clsx(
-            "h-2 w-2 rounded-full bg-lime",
-            active && "animate-pulse_dot"
-          )}
-        />
+        <span className="rounded-md bg-white px-2.5 py-1 font-display text-xs font-bold text-ink shadow-sm">
+          unbusylabs
+        </span>
+        <span className={clsx("h-2 w-2 rounded-full bg-lime", active && "animate-pulse_dot")} />
       </div>
 
-      <div className="mt-4 flex items-center justify-center gap-3 rounded-lg bg-white/5 py-6">
-        <Gear active={active} reverse={false} />
-        <Gear active={active} reverse />
-      </div>
+      <div className="mt-4 flex items-center gap-3">
+        {/* Joystick + buttons */}
+        <div className="flex shrink-0 flex-col items-center gap-2">
+          <div className="relative flex h-10 w-6 items-end justify-center rounded-full bg-ink/10">
+            <span className="mb-1 h-2 w-2 rounded-full bg-ink/60" />
+          </div>
+          <span className="h-2.5 w-2.5 rounded-full bg-coral" />
+          <span className="h-2.5 w-2.5 rounded-full bg-emerald-500" />
+        </div>
 
-      <ul className="mt-4 grid grid-cols-2 gap-x-3 gap-y-1 text-[11px] font-semibold tracking-wide text-white/70">
-        {machineLabels.map((label) => (
-          <li key={label}>{label}</li>
-        ))}
-      </ul>
+        {/* Window with spiral gear */}
+        <div className="flex flex-1 items-center justify-center rounded-xl bg-[#0c2a4d] py-5 shadow-inner">
+          <Spiral active={active} />
+        </div>
+
+        {/* Indicator labels */}
+        <ul className="shrink-0 space-y-1 text-[10px] font-bold tracking-wide text-ink/60">
+          {machineLabels.map((label) => (
+            <li key={label}>{label}</li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
 
-function Gear({ active, reverse }: { active: boolean; reverse: boolean }) {
+function Spiral({ active }: { active: boolean }) {
   return (
     <svg
-      viewBox="0 0 24 24"
-      width="28"
-      height="28"
-      className={clsx(
-        "text-lime",
-        active && (reverse ? "animate-spin_slow_reverse" : "animate-spin_slow")
-      )}
+      viewBox="0 0 48 48"
+      width="40"
+      height="40"
+      className={clsx(active && "animate-spin_slow")}
       fill="none"
     >
-      <circle cx="12" cy="12" r="3" fill="currentColor" />
       <path
-        d="M12 2v3M12 19v3M22 12h-3M5 12H2M19.07 4.93l-2.12 2.12M7.05 16.95l-2.12 2.12M19.07 19.07l-2.12-2.12M7.05 7.05 4.93 4.93"
-        stroke="currentColor"
-        strokeWidth="2"
+        d="M24 4a20 20 0 1 1-14.1 5.9"
+        stroke="#C8FF3D"
+        strokeWidth="5"
         strokeLinecap="round"
       />
+      <path
+        d="M24 12a12 12 0 1 1-8.5 3.5"
+        stroke="#FF6B5E"
+        strokeWidth="5"
+        strokeLinecap="round"
+      />
+      <path d="M24 20a4 4 0 1 1-2.8 1.2" stroke="#3563FF" strokeWidth="5" strokeLinecap="round" />
     </svg>
   );
 }
@@ -173,20 +202,20 @@ function MobileGroup({
   items,
 }: {
   title: string;
-  items: { icon: React.ComponentType<{ size?: number; className?: string }>; label: string }[];
+  items: { icon: IconType; label: string; bg: string; fg: string }[];
 }) {
   return (
-    <div className="w-full rounded-xl border border-border bg-white p-4">
-      <p className="text-center text-xs font-semibold uppercase tracking-widest text-slate">
+    <div className="w-full rounded-xl border border-border bg-[#12141a] p-4">
+      <p className="text-center text-xs font-semibold uppercase tracking-widest text-white/50">
         {title}
       </p>
       <div className="mt-3 grid grid-cols-3 gap-2">
         {items.map((item) => (
           <div
             key={item.label}
-            className="flex h-14 flex-col items-center justify-center rounded-lg border border-border bg-ivory"
+            className={clsx("flex h-14 flex-col items-center justify-center rounded-lg", item.bg)}
           >
-            <item.icon size={18} className="text-ink/70" />
+            <item.icon size={18} className={item.fg} />
           </div>
         ))}
       </div>
