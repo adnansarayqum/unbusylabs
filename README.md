@@ -86,16 +86,28 @@ without touching component code.
 Run `npm test` for unit/component tests and `npm run e2e` for the full browser suite (the e2e
 config builds and serves the production app on port 3100 automatically).
 
-## Deployment (Vercel)
+## Deployment (Railway)
 
-1. Import this repository into Vercel.
-2. Set the environment variables from `.env.example` in the Vercel project settings (all optional
-   for a first deploy).
-3. Deploy — `next build` runs automatically.
-4. Once `unbusylabs.com` is registered, add it as a Production Domain in the Vercel project and
-   point its DNS (A/CNAME, per Vercel's instructions) at Vercel. Update
-   `NEXT_PUBLIC_SITE_URL` to `https://unbusylabs.com` and redeploy so canonical URLs, the sitemap
-   and structured data pick up the new origin.
+A `railway.json` at the repo root configures the build (Nixpacks, `npm run build`) and start
+(`npm run start`) commands, so Railway needs no manual build settings.
+
+1. In the [Railway dashboard](https://railway.app), create a new project → **Deploy from GitHub
+   repo** → select `adnansarayqum/unbusylabs` and the branch to deploy.
+2. Railway detects Node via Nixpacks automatically and reads `railway.json` for the build/start
+   commands and healthcheck.
+3. Add the environment variables from `.env.example` under the service's **Variables** tab (all
+   optional for a first deploy — the contact form falls back to its dev-mode handler without
+   `RESEND_API_KEY`).
+4. Deploy. Railway injects `PORT` automatically; `next start` reads it and binds to `0.0.0.0`, so
+   no extra configuration is needed.
+5. Once `unbusylabs.com` is registered, add it as a custom domain under the service's
+   **Settings → Domains** and point its DNS (CNAME, per Railway's instructions) at the generated
+   Railway target. Update `NEXT_PUBLIC_SITE_URL` to `https://unbusylabs.com` in the Variables tab
+   and redeploy so canonical URLs, the sitemap and structured data pick up the new origin.
+
+The app is a standard Next.js server (no platform-specific APIs), so it also deploys unchanged to
+Vercel or any other Node host if preferred — just point it at the same `npm run build` /
+`npm run start` scripts.
 
 No production credentials, domain purchase or third-party accounts have been created as part of
 this build.
