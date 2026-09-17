@@ -4,12 +4,12 @@ import { services } from "@/content/services";
 
 export function ServicePills() {
   return (
-    <nav aria-label="Services" className="relative mb-4">
+    <nav aria-label="Services" className="relative">
       <Image
         src="/images/service-pills.png"
         alt=""
         width={1536}
-        height={105}
+        height={95}
         className="h-auto w-full"
       />
       <ul className="absolute inset-0 flex">
