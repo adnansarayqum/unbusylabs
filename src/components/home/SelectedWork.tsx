@@ -1,14 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { caseStudies } from "@/content/work";
 import { Button } from "@/components/ui/Button";
-
-const accentClasses: Record<string, string> = {
-  cobalt: "from-cobalt/15 to-cobalt/5",
-  lime: "from-lime/25 to-lime/5",
-  coral: "from-coral/20 to-coral/5",
-  ink: "from-ink/15 to-ink/5",
-};
 
 export function SelectedWork() {
   return (
@@ -32,24 +26,43 @@ export function SelectedWork() {
           </Button>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2">
+        <div className="mt-10 grid gap-4 sm:gap-6 sm:grid-cols-2">
           {caseStudies.map((project) => (
             <Link
               key={project.slug}
               href={`/work/${project.slug}`}
-              className={`group flex flex-col justify-between rounded-xl2 border border-border bg-gradient-to-br p-6 transition hover:-translate-y-1 hover:shadow-lg ${accentClasses[project.accent]}`}
+              className="group flex items-center gap-4 overflow-hidden rounded-xl2 border border-border bg-white p-3 transition hover:-translate-y-1 hover:shadow-lg sm:block sm:p-0"
             >
-              <div>
-                <p className="text-[11px] font-semibold tracking-widest text-ink/60">
+              <div className="relative h-20 w-28 shrink-0 overflow-hidden rounded-lg bg-ivory sm:h-auto sm:w-full sm:rounded-none sm:aspect-[280/130]">
+                <Image
+                  src={`/images/work/${project.slug}.png`}
+                  alt=""
+                  fill
+                  sizes="(min-width: 640px) 50vw, 112px"
+                  className="object-cover"
+                />
+              </div>
+
+              <div className="min-w-0 flex-1 sm:p-6">
+                <p className="hidden text-[11px] font-semibold tracking-widest text-ink/50 sm:block">
                   {project.category}
                 </p>
-                <h3 className="mt-3 font-display text-xl font-bold text-ink">{project.name}</h3>
-                <p className="mt-2 text-sm text-slate">{project.summary}</p>
+                <h3 className="font-display text-lg font-bold text-ink sm:mt-2 sm:text-xl">
+                  {project.name}
+                </h3>
+                <p className="mt-1 text-sm text-slate sm:hidden">{project.tagline}</p>
+                <p className="mt-2 hidden text-sm text-slate sm:block">{project.summary}</p>
+                <span className="mt-1 hidden items-center gap-1 text-sm font-semibold text-cobalt sm:mt-5 sm:inline-flex">
+                  {project.tagline}
+                  <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden />
+                </span>
               </div>
-              <span className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-ink">
-                {project.tagline}
-                <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden />
-              </span>
+
+              <ArrowRight
+                size={18}
+                className="shrink-0 self-center text-cobalt transition group-hover:translate-x-1 sm:hidden"
+                aria-hidden
+              />
             </Link>
           ))}
         </div>

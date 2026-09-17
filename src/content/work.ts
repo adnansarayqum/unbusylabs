@@ -118,7 +118,7 @@ export const caseStudies: CaseStudy[] = [
     category: "LEAD MANAGEMENT · AI · BOOKING",
     status: "MVP",
     kind: "Client project",
-    accent: "coral",
+    accent: "ink",
     tagline: "Smarter project workflows.",
     summary:
       "An AI lead and booking automation MVP for architecture practices, covering enquiry capture, qualification, follow-up, pipeline management and consultation booking.",
@@ -160,7 +160,7 @@ export const caseStudies: CaseStudy[] = [
     category: "CUSTOMER JOURNEY · CASE INTAKE",
     status: "Prototype / concept",
     kind: "Self-initiated product",
-    accent: "ink",
+    accent: "coral",
     tagline: "A clearer path forward.",
     summary:
       "A guided digital journey for parking-ticket enquiries, evidence collection, customer intake, WhatsApp handoff and appeal tracking.",

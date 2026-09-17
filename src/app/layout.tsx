@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Manrope, Inter } from "next/font/google";
+import { Manrope, Inter, Caveat } from "next/font/google";
 import "./globals.css";
 import { siteConfig } from "@/content/site";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -14,6 +14,12 @@ const manrope = Manrope({
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-body",
+  display: "swap",
+});
+
+const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-hand",
   display: "swap",
 });
 
@@ -54,7 +60,7 @@ const structuredData = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${manrope.variable} ${inter.variable}`}>
+    <html lang="en" className={`${manrope.variable} ${inter.variable} ${caveat.variable}`}>
       <body>
         <a href="#main-content" className="skip-link">
           Skip to content

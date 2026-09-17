@@ -9,7 +9,7 @@ export function HeroMachineSection() {
       <div className="container-lab pb-10">
         <WorkflowMachine />
       </div>
-      <div className="container-lab">
+      <div className="container-lab hidden lg:block">
         <ServicePills />
       </div>
     </div>

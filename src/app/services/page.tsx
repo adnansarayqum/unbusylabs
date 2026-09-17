@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Globe, Code2, Workflow, Sparkles, PlaySquare, BarChart3, Check } from "lucide-react";
 import { services } from "@/content/services";
+import { serviceColors } from "@/content/service-colors";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
 
@@ -35,6 +36,7 @@ export default function ServicesPage() {
 
       {services.map((service, index) => {
         const Icon = icons[service.icon];
+        const color = serviceColors[service.slug];
         return (
           <Section
             key={service.slug}
@@ -43,8 +45,10 @@ export default function ServicesPage() {
           >
             <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
               <div>
-                <span className="inline-flex h-12 w-12 items-center justify-center rounded-lg bg-cobalt/10 text-cobalt">
-                  <Icon size={24} aria-hidden />
+                <span
+                  className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${color.bg}`}
+                >
+                  <Icon size={24} className={color.fg} aria-hidden />
                 </span>
                 <h2 className="mt-4 font-display text-2xl font-bold text-ink sm:text-3xl">
                   {service.title}

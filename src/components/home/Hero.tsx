@@ -1,32 +1,38 @@
 import { Button } from "@/components/ui/Button";
+import { SquiggleArrow } from "@/components/ui/Squiggle";
+import { HeroFunnelMobile } from "@/components/home/HeroFunnelMobile";
 
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-14 pb-8 sm:pt-20">
       <div className="container-lab">
         <div className="relative mx-auto max-w-3xl text-center">
-          <p
+          <div
             aria-hidden
-            className="absolute -left-4 top-4 hidden -rotate-6 text-xs font-medium text-slate sm:block lg:-left-24 lg:top-10"
+            className="absolute -left-6 top-0 hidden -rotate-6 text-left sm:block lg:-left-28 lg:top-6"
           >
-            SPREADSHEETS,
-            <br />
-            INBOXES, NOTES...
-            <br />
-            BUSYWORK.
-          </p>
-          <p
+            <p className="font-hand text-xl leading-tight text-slate/80 lg:text-2xl">
+              Spreadsheets,
+              <br />
+              inboxes, notes...
+              <br />
+              busywork.
+            </p>
+            <SquiggleArrow className="mt-1 rotate-[100deg] text-slate/60" />
+          </div>
+          <div
             aria-hidden
-            className="absolute -right-4 top-4 hidden rotate-6 text-right text-xs font-medium text-slate sm:block lg:-right-32 lg:top-10"
+            className="absolute -right-6 top-0 hidden rotate-6 text-right sm:block lg:-right-32 lg:top-6"
           >
-            WEBSITES, AUTOMATIONS,
-            <br />
-            AI AGENTS, CONTENT,
-            <br />
-            INSIGHTS...
-            <br />
-            REAL PROGRESS.
-          </p>
+            <p className="font-hand text-xl leading-tight text-cobalt/80 lg:text-2xl">
+              Websites, automations,
+              <br />
+              AI agents, content,
+              <br />
+              insights... real progress.
+            </p>
+            <SquiggleArrow className="ml-auto mt-1 rotate-[75deg] scale-x-[-1] text-cobalt/60" />
+          </div>
 
           <h1 className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight text-ink sm:text-6xl lg:text-7xl">
             Messy process in.
@@ -48,6 +54,8 @@ export function Hero() {
             </Button>
           </div>
         </div>
+
+        <HeroFunnelMobile />
       </div>
     </section>
   );
