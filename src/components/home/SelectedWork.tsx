@@ -1,21 +1,8 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { caseStudies } from "@/content/work";
 import { Button } from "@/components/ui/Button";
-
-const stripClasses: Record<string, string> = {
-  cobalt: "bg-cobalt/10",
-  lime: "bg-lime/25",
-  coral: "bg-coral/15",
-  ink: "bg-ink/[0.06]",
-};
-
-const barClasses: Record<string, string> = {
-  cobalt: "bg-cobalt/40",
-  lime: "bg-emerald-500/50",
-  coral: "bg-coral/50",
-  ink: "bg-ink/30",
-};
 
 export function SelectedWork() {
   return (
@@ -46,11 +33,14 @@ export function SelectedWork() {
               href={`/work/${project.slug}`}
               className="group overflow-hidden rounded-xl2 border border-border bg-white transition hover:-translate-y-1 hover:shadow-lg"
             >
-              <div className={`relative p-6 ${stripClasses[project.accent]}`}>
-                <p className="max-w-[220px] font-display text-lg font-bold leading-snug text-ink">
-                  {project.tagline}
-                </p>
-                <MiniMockup accent={project.accent} />
+              <div className="relative aspect-[280/130] w-full overflow-hidden bg-ivory">
+                <Image
+                  src={`/images/work/${project.slug}.png`}
+                  alt=""
+                  fill
+                  sizes="(min-width: 640px) 50vw, 100vw"
+                  className="object-cover"
+                />
               </div>
 
               <div className="p-6">
@@ -60,7 +50,7 @@ export function SelectedWork() {
                 <h3 className="mt-2 font-display text-xl font-bold text-ink">{project.name}</h3>
                 <p className="mt-2 text-sm text-slate">{project.summary}</p>
                 <span className="mt-5 inline-flex items-center gap-1 text-sm font-semibold text-cobalt">
-                  View project
+                  {project.tagline}
                   <ArrowRight size={16} className="transition group-hover:translate-x-1" aria-hidden />
                 </span>
               </div>
@@ -69,26 +59,5 @@ export function SelectedWork() {
         </div>
       </div>
     </section>
-  );
-}
-
-function MiniMockup({ accent }: { accent: string }) {
-  const bar = barClasses[accent];
-  return (
-    <div
-      aria-hidden
-      className="absolute bottom-4 right-4 hidden w-24 rounded-lg border border-white/60 bg-white/80 p-2 shadow-sm sm:block"
-    >
-      <div className="flex gap-1">
-        <span className="h-1.5 w-1.5 rounded-full bg-coral/70" />
-        <span className="h-1.5 w-1.5 rounded-full bg-lime/70" />
-        <span className="h-1.5 w-1.5 rounded-full bg-cobalt/70" />
-      </div>
-      <div className="mt-2 space-y-1">
-        <span className={`block h-1.5 w-full rounded-full ${bar}`} />
-        <span className={`block h-1.5 w-2/3 rounded-full ${bar}`} />
-        <span className={`block h-1.5 w-4/5 rounded-full ${bar}`} />
-      </div>
-    </div>
   );
 }

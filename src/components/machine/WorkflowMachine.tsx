@@ -67,10 +67,10 @@ export function WorkflowMachine() {
         <Image
           src="/images/hero-machine.png"
           alt=""
-          width={990}
-          height={130}
+          width={1632}
+          height={186}
           priority
-          className="h-auto w-full max-w-4xl"
+          className="h-auto w-full max-w-6xl"
         />
       </div>
 
