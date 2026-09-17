@@ -6,10 +6,10 @@ export function HeroMachineSection() {
   return (
     <div className="bg-ivory">
       <Hero />
-      <div className="container-lab pb-10">
+      <div className="container-lab pb-4">
         <WorkflowMachine />
       </div>
-      <div className="container-lab hidden lg:block">
+      <div className="container-lab hidden pb-4 lg:block">
         <ServicePills />
       </div>
     </div>
