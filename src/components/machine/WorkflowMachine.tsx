@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import clsx from "clsx";
 import {
   FileSpreadsheet,
@@ -59,67 +60,28 @@ export function WorkflowMachine() {
   }, []);
 
   return (
-    <div ref={sectionRef} aria-hidden="true">
-      {/* Desktop / tablet horizontal machine */}
-      <div className="hidden lg:block">
-        <div className="relative flex items-center gap-4">
-          <ConveyorLane items={inputs} active={isActive} />
-          <Machine active={isActive} />
-          <ConveyorLane items={outputs} active={isActive} />
-        </div>
-        <p className="mt-2 text-center font-hand text-sm tracking-wide text-slate/70">
-          Less busy. More possible.
-        </p>
+    <div ref={sectionRef}>
+      {/* Desktop / tablet: the approved reference artwork, shown near its native
+          resolution so it stays sharp rather than upscaled and blurry. */}
+      <div className="hidden justify-center lg:flex" aria-hidden="true">
+        <Image
+          src="/images/hero-machine.png"
+          alt=""
+          width={990}
+          height={130}
+          priority
+          className="h-auto w-full max-w-4xl"
+        />
       </div>
 
       {/* Mobile / tablet-portrait vertical sequence */}
-      <div className="flex flex-col items-center gap-4 lg:hidden">
+      <div className="flex flex-col items-center gap-4 lg:hidden" aria-hidden="true">
         <MobileGroup title="Messy inputs" items={inputs} />
         <MobileArrow />
         <Machine active={isActive} compact />
         <MobileArrow />
         <MobileGroup title="Useful outputs" items={outputs} />
       </div>
-    </div>
-  );
-}
-
-function ConveyorLane({
-  items,
-  active,
-}: {
-  items: { icon: IconType; label: string; rotate?: string; bg: string; fg: string }[];
-  active: boolean;
-}) {
-  return (
-    <div className="flex-1">
-      <div className="relative overflow-hidden rounded-2xl bg-[#12141a] p-4 pb-3 shadow-inner">
-        <div className={clsx("flex items-end gap-2.5", active && "animate-conveyor")}>
-          {items.map((item) => (
-            <div
-              key={item.label}
-              className={clsx(
-                "flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-lg shadow-md transition-transform",
-                item.bg,
-                item.rotate
-              )}
-            >
-              <item.icon size={20} className={item.fg} />
-            </div>
-          ))}
-        </div>
-        <Rollers />
-      </div>
-    </div>
-  );
-}
-
-function Rollers() {
-  return (
-    <div className="mt-2 flex justify-between px-1">
-      {Array.from({ length: 8 }).map((_, index) => (
-        <span key={index} className="h-2.5 w-2.5 rounded-full bg-white/15" />
-      ))}
     </div>
   );
 }
