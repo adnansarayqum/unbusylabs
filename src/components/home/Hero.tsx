@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/Button";
 import { SquiggleArrow } from "@/components/ui/Squiggle";
+import { HeroFunnelMobile } from "@/components/home/HeroFunnelMobile";
 
 export function Hero() {
   return (
@@ -53,6 +54,8 @@ export function Hero() {
             </Button>
           </div>
         </div>
+
+        <HeroFunnelMobile />
       </div>
     </section>
   );

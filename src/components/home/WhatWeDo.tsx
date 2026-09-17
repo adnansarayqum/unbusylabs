@@ -3,6 +3,7 @@ import { Globe, Code2, Workflow, Sparkles, PlaySquare, BarChart3, ArrowRight } f
 import { services } from "@/content/services";
 import { serviceColors } from "@/content/service-colors";
 import { Section, SectionHeading } from "@/components/ui/Section";
+import { MachineOutputsMobile } from "@/components/home/MachineOutputsMobile";
 
 const icons = {
   globe: Globe,
@@ -21,6 +22,10 @@ export function WhatWeDo() {
         heading="Useful technology. No theatre."
         supporting="We start with the business problem, not the tool. Then we design the smallest useful system that can create a measurable improvement."
       />
+
+      <div className="mt-10">
+        <MachineOutputsMobile />
+      </div>
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => {
