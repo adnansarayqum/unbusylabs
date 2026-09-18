@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Globe, Code2, Workflow, Sparkles, PlaySquare, BarChart3, Check } from "lucide-react";
+import Image from "next/image";
+import { Check } from "lucide-react";
 import { services } from "@/content/services";
-import { serviceColors } from "@/content/service-colors";
+import { serviceIconImages } from "@/content/service-icons";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { Button } from "@/components/ui/Button";
-
-const icons = {
-  globe: Globe,
-  code: Code2,
-  workflow: Workflow,
-  sparkles: Sparkles,
-  play: PlaySquare,
-  "bar-chart": BarChart3,
-};
 
 export const metadata: Metadata = {
   title: "Services",
@@ -35,8 +27,7 @@ export default function ServicesPage() {
       </Section>
 
       {services.map((service, index) => {
-        const Icon = icons[service.icon];
-        const color = serviceColors[service.slug];
+        const icon = serviceIconImages[service.slug];
         return (
           <Section
             key={service.slug}
@@ -45,11 +36,9 @@ export default function ServicesPage() {
           >
             <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-start">
               <div>
-                <span
-                  className={`inline-flex h-12 w-12 items-center justify-center rounded-xl ${color.bg}`}
-                >
-                  <Icon size={24} className={color.fg} aria-hidden />
-                </span>
+                <div className="relative h-16 w-16">
+                  <Image src={icon.src} alt="" fill sizes="64px" className="object-contain object-left" />
+                </div>
                 <h2 className="mt-4 font-display text-2xl font-bold text-ink sm:text-3xl">
                   {service.title}
                 </h2>
