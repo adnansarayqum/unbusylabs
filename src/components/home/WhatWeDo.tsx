@@ -1,18 +1,10 @@
 import Link from "next/link";
-import { Globe, Code2, Workflow, Sparkles, PlaySquare, BarChart3, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { services } from "@/content/services";
-import { serviceColors } from "@/content/service-colors";
+import { serviceIconImages } from "@/content/service-icons";
 import { Section, SectionHeading } from "@/components/ui/Section";
 import { MachineOutputsMobile } from "@/components/home/MachineOutputsMobile";
-
-const icons = {
-  globe: Globe,
-  code: Code2,
-  workflow: Workflow,
-  sparkles: Sparkles,
-  play: PlaySquare,
-  "bar-chart": BarChart3,
-};
 
 export function WhatWeDo() {
   return (
@@ -29,8 +21,7 @@ export function WhatWeDo() {
 
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => {
-          const Icon = icons[service.icon];
-          const color = serviceColors[service.slug];
+          const icon = serviceIconImages[service.slug];
           return (
             <Link
               key={service.slug}
@@ -38,11 +29,9 @@ export function WhatWeDo() {
               href={`/services#${service.slug}`}
               className="group flex flex-col rounded-xl2 border border-border bg-white p-6 transition hover:-translate-y-1 hover:shadow-lg"
             >
-              <span
-                className={`inline-flex h-11 w-11 items-center justify-center rounded-xl ${color.bg}`}
-              >
-                <Icon size={22} className={color.fg} aria-hidden />
-              </span>
+              <div className="relative h-14 w-14">
+                <Image src={icon.src} alt="" fill sizes="56px" className="object-contain object-left" />
+              </div>
               <h3 className="mt-4 font-display text-lg font-bold text-ink">{service.title}</h3>
               <p className="mt-2 flex-1 text-sm text-slate">{service.benefit}</p>
               <span className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-cobalt">

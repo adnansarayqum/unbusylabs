@@ -1,20 +1,11 @@
 "use client";
 
-import { Globe, Code2, Workflow, Sparkles, PlaySquare, BarChart3 } from "lucide-react";
+import Image from "next/image";
 import { services } from "@/content/services";
-import { serviceColors } from "@/content/service-colors";
+import { serviceIconImages } from "@/content/service-icons";
 import { MachineBox } from "@/components/machine/MachineBox";
 import { SquiggleArrow } from "@/components/ui/Squiggle";
 import { useInView } from "@/lib/use-in-view";
-
-const icons = {
-  globe: Globe,
-  code: Code2,
-  workflow: Workflow,
-  sparkles: Sparkles,
-  play: PlaySquare,
-  "bar-chart": BarChart3,
-};
 
 /**
  * Mobile-only counterpart to the desktop hero machine image: the machine
@@ -35,17 +26,15 @@ export function MachineOutputsMobile() {
 
       <div className="grid w-full max-w-xs grid-cols-3 gap-2">
         {services.map((service) => {
-          const Icon = icons[service.icon];
-          const color = serviceColors[service.slug];
+          const icon = serviceIconImages[service.slug];
           return (
             <div
               key={service.slug}
-              className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-white px-2 py-3 text-center shadow-sm"
+              className="flex items-center justify-center rounded-xl border border-border bg-white p-2 shadow-sm"
             >
-              <span className={`flex h-8 w-8 items-center justify-center rounded-full ${color.bg}`}>
-                <Icon size={16} className={color.fg} />
-              </span>
-              <span className="text-[11px] font-semibold text-ink">{service.shortLabel}</span>
+              <div className="relative h-16 w-full">
+                <Image src={icon.src} alt="" fill sizes="80px" className="object-contain" />
+              </div>
             </div>
           );
         })}
